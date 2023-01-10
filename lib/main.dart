@@ -31,19 +31,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List to = <String>[];
   // var todos = List.filled(4, 0);
   //var todos = List(5);
   //List<String> todos = List<String>.filled(0, "", growable: true);
-  String input = "";
+  String todoTitle = "";
 
   createTodos() {
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("MyTodos").doc(input);
+        FirebaseFirestore.instance.collection("MyTodos").doc(todoTitle);
     //map
-    Map<String, String> todos = {"todoTitle": input};
+    Map<String, String> todos = {"todoTitle": todoTitle};
 
     documentReference.set(todos).whenComplete(() {
-      print("$input created");
+      print("$todoTitle created");
     });
   }
 
@@ -62,7 +63,11 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: Text("App Create Todo Daily"),
       ),
+      //floatingActionButton(Tham số)
+      //FloatingActionButton(Đối tượng)
+      //Đối tượng truyền vào tham số
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () {
           showDialog(
               context: context,
@@ -73,7 +78,7 @@ class _MyAppState extends State<MyApp> {
                   title: Text("Add TodoList"),
                   content: TextField(
                     onChanged: (String value) {
-                      input = value;
+                      todoTitle = value;
                     },
                   ),
                   actions: <Widget>[
